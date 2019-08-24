@@ -1,4 +1,6 @@
-package elogging
+package logging
+
+import "log"
 
 // Log error tracking
 func Log(err error) {
