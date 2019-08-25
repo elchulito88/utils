@@ -53,7 +53,7 @@ func (p Paths) RemoveFile() {
 }
 
 //MkFile is used to make and save a file
-func (p Paths) MkFile(obj []byte) {
+func (p Paths) MkFile(obj string) {
 	err := ioutil.WriteFile(p.Path, []byte(obj), os.ModePerm)
 	l.Log(err)
 }
