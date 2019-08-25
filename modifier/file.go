@@ -12,6 +12,7 @@ type FileManipulator interface {
 	MkDir()
 	RemoveDir()
 	RemoveFile()
+	MkFile()
 }
 
 //Paths is a file string
