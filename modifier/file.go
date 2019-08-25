@@ -1,8 +1,9 @@
 package modifier
 
 import (
-	"log"
 	"os"
+
+	l "github.com/elchulito88/utils/logging"
 )
 
 //FileManipulator interface
@@ -23,9 +24,7 @@ func RemovePath(path string) {
 
 	if err == nil {
 		err2 := os.RemoveAll(path)
-		if err2 != nil {
-			log.Fatal(err2)
-		}
+		l.Log(err2)
 	}
 }
 
@@ -45,9 +44,7 @@ func (p Paths) RemoveFile() {
 	_, err := os.Stat(p.Path)
 
 	if err == nil {
-		err2 := os.Remove(p.Path)
-		if err2 != nil {
-			log.Fatal(err2)
-		}
+		errR := os.Remove(p.Path)
+		l.Log(errR)
 	}
 }
