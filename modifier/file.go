@@ -1,6 +1,7 @@
 package modifier
 
 import (
+	"io/ioutil"
 	"os"
 
 	l "github.com/elchulito88/utils/logging"
@@ -31,7 +32,7 @@ func RemovePath(path string) {
 //MkDir is a method for creating a Directory
 func (p Paths) MkDir() {
 	RemovePath(p.Path)
-	err := os.Mkdir(p.Path, 0755)
+	err := os.Mkdir(p.Path, os.ModePerm)
 	l.Log(err)
 }
 
@@ -48,4 +49,10 @@ func (p Paths) RemoveFile() {
 		errR := os.Remove(p.Path)
 		l.Log(errR)
 	}
+}
+
+//MkFile is used to make and save a file
+func (p Paths) MkFile(obj []byte) {
+	err := ioutil.WriteFile(p.Path, []byte(obj), os.ModePerm)
+	l.Log(err)
 }
