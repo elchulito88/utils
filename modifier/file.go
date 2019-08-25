@@ -31,7 +31,8 @@ func RemovePath(path string) {
 //MkDir is a method for creating a Directory
 func (p Paths) MkDir() {
 	RemovePath(p.Path)
-	os.Mkdir(p.Path, 0755)
+	err := os.Mkdir(p.Path, 0755)
+	l.Log(err)
 }
 
 //RemoveDir is a method for creating a Path
