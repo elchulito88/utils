@@ -1,6 +1,8 @@
 package modifier
 
 import (
+	"fmt"
+	"io"
 	"io/ioutil"
 	"os"
 
@@ -14,6 +16,7 @@ type FileManipulator interface {
 	RemoveFile()
 	MkFile(obj string)
 	MvFile(obj string)
+	CopyPath(obj string) (int64, error)
 }
 
 //Paths is a file string
@@ -63,4 +66,31 @@ func (p Paths) MkFile(obj string) {
 func (p Paths) MvFile(obj string) {
 	err := os.Rename(p.Path, obj)
 	l.Log(err)
+}
+
+//CopyPath is used to copy files from one location to the next
+func (p Paths) CopyPath(dst string) (int64, error) {
+	sourceFileStat, err := os.Stat(p.Path)
+	if err != nil {
+		return 0, err
+	}
+
+	if !sourceFileStat.Mode().IsRegular() {
+		return 0, fmt.Errorf("%s is not a regular file", p.Path)
+	}
+
+	source, err := os.Open(p.Path)
+	if err != nil {
+		return 0, err
+	}
+	defer source.Close()
+
+	destination, err := os.Create(dst)
+	if err != nil {
+		return 0, err
+	}
+	defer destination.Close()
+
+	nbytes, err := io.Copy(destination, source)
+	return nbytes, err
 }
