@@ -13,6 +13,7 @@ type FileManipulator interface {
 	RemoveDir()
 	RemoveFile()
 	MkFile(obj string)
+	MvFile(obj string)
 }
 
 //Paths is a file string
@@ -55,5 +56,11 @@ func (p Paths) RemoveFile() {
 //MkFile is used to make and save a file
 func (p Paths) MkFile(obj string) {
 	err := ioutil.WriteFile(p.Path, []byte(obj), os.ModePerm)
+	l.Log(err)
+}
+
+//MvFile moves files across different locations
+func (p Paths) MvFile(obj string) {
+	err := os.Rename(p.Path, obj)
 	l.Log(err)
 }
