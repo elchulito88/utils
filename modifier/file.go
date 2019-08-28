@@ -17,6 +17,7 @@ type FileManipulator interface {
 	MkFile(obj string)
 	MvFile(obj string)
 	CopyPath(obj string) (int64, error)
+	CreateSSHKey(obj string)
 }
 
 //Paths is a file string
