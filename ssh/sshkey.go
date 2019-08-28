@@ -13,42 +13,6 @@ import (
 	"golang.org/x/crypto/ssh"
 )
 
-// Paths for the CreateSSHKey function
-type Paths struct {
-	Path string
-}
-
-// CreateSSHKey is used to create SSH Keys
-func (p Paths) CreateSSHKey(src string) {
-
-	savePrivateFileTo := "./" + p.Path
-	savePublicFileTo := "./" + p.Path + ".pub"
-
-	bitSize := 4096
-
-	privateKey, err := GeneratePrivateKey(bitSize)
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-
-	publicKeyBytes, err := GeneratePublicKey(&privateKey.PublicKey)
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-
-	privateKeyBytes := EncodePrivateKeyToPEM(privateKey)
-
-	err = WriteKeyToFile(privateKeyBytes, savePrivateFileTo)
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-
-	err = WriteKeyToFile([]byte(publicKeyBytes), savePublicFileTo)
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-}
-
 // GeneratePrivateKey creates a RSA Private Key of specified byte size
 func GeneratePrivateKey(bitSize int) (*rsa.PrivateKey, error) {
 	// Private Key generation

@@ -7,6 +7,7 @@ import (
 	"os"
 
 	l "github.com/elchulito88/utils/logging"
+	s "github.com/elchulito88/utils/ssh"
 )
 
 //FileManipulator interface
@@ -94,4 +95,35 @@ func (p Paths) CopyPath(dst string) (int64, error) {
 
 	nbytes, err := io.Copy(destination, source)
 	return nbytes, err
+}
+
+// CreateSSHKey is used to create SSH Keys
+func (p Paths) CreateSSHKey(src string) {
+
+	savePrivateFileTo := "./" + p.Path
+	savePublicFileTo := "./" + p.Path + ".pub"
+
+	bitSize := 4096
+
+	privateKey, err := s.GeneratePrivateKey(bitSize)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	publicKeyBytes, err := s.GeneratePublicKey(&privateKey.PublicKey)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	privateKeyBytes := s.EncodePrivateKeyToPEM(privateKey)
+
+	err = s.WriteKeyToFile(privateKeyBytes, savePrivateFileTo)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	err = s.WriteKeyToFile([]byte(publicKeyBytes), savePublicFileTo)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 }
