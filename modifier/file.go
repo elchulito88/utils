@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"os"
 	"log"
+	"os"
 
 	l "github.com/elchulito88/utils/logging"
 	s "github.com/elchulito88/utils/ssh"
@@ -19,7 +19,7 @@ type FileManipulator interface {
 	MkFile(obj string)
 	MvFile(obj string)
 	CopyPath(obj string) (int64, error)
-	CreateSSHKey(obj string)
+	CreateSSHKey()
 }
 
 //Paths is a file string
@@ -99,7 +99,7 @@ func (p Paths) CopyPath(dst string) (int64, error) {
 }
 
 // CreateSSHKey is used to create SSH Keys
-func (p Paths) CreateSSHKey(src string) {
+func (p Paths) CreateSSHKey() {
 
 	savePrivateFileTo := "./" + p.Path
 	savePublicFileTo := "./" + p.Path + ".pub"
