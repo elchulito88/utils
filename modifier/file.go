@@ -5,6 +5,7 @@ import (
 	"io"
 	"io/ioutil"
 	"os"
+	"log"
 
 	l "github.com/elchulito88/utils/logging"
 	s "github.com/elchulito88/utils/ssh"
