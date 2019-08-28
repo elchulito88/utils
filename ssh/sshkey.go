@@ -1,6 +1,6 @@
 // This shows an example of how to generate a SSH RSA Private/Public key pair and save it locally
 
-package main
+package ssh
 
 import (
 	"crypto/rand"
